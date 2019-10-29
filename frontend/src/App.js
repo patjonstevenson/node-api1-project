@@ -30,7 +30,7 @@ function App() {
 
   const deleteUser = id => {
     axios
-      .delete(`http://localhost:5000/users/${id}`)
+      .delete(`http://localhost:5000/api/users/${id}`)
       .then(res => {
         console.log(`\nUser successfully deleted:\n${res}\n`)
       })

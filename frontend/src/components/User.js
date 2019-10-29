@@ -9,7 +9,10 @@ const User = ({ user, setUserToEdit, toggleEditing, deleteUser }) => {
                 setUserToEdit(user);
                 toggleEditing();
             }}>Edit</button>
-            <button onClick={() => delete (user.id)}>Delete</button>
+            <button onClick={() => {
+                console.log("Deleting user ", user.id);
+                deleteUser(user.id);
+            }}>Delete</button>
         </div>
     );
 }
