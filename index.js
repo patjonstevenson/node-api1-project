@@ -21,7 +21,7 @@ const getUserById = async id => {
 
 server.post("/api/users", (req, res) => {
     const body = req.body
-    console.log(body);
+
     if (!(body.name || body.bio)) {
         res.status(400).json({
             errorMessage: "Please provide name and bio for the user."
@@ -51,7 +51,26 @@ server.get("/api/users", (req, res) => {
 });
 
 server.get("/api/users/:id", (req, res) => {
+    const id = req.params.id;
 
+    if (!id) {
+        res.status(400).json({
+            errorMessage: "Please provide id for the user."
+        });
+    } else {
+        db
+            .findById(id)
+            .then(user => {
+                if (user) {
+                    res.status(200).json(user);
+                } else {
+                    res.status(404).json({ message: "The user with the specified ID does not exist." })
+                }
+            })
+            .catch(err => {
+                res.status(500).json({ error: "The user information could not be retrieved." });
+            })
+    }
 });
 
 server.delete("/api/users/:id", (req, res) => {
