@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const UserForm = ({ editing, setEditing, userToEdit, toggleEditing }) => {
+const UserForm = ({ editing, setEditing, userToEdit, toggleEditing, users, setUsers }) => {
     const [newUser, setNewUser] = useState({ name: "", bio: "" });
 
     useEffect(() => {
@@ -23,11 +23,12 @@ const UserForm = ({ editing, setEditing, userToEdit, toggleEditing }) => {
                 .then(res => {
                     console.log(`\nUser successfully updated:\n${res}`);
                     setNewUser({ name: "", bio: "" });
+                    setUsers(users.map(user => user.id === res.id ? res : user));
                 })
                 .catch(err => console.log(`\nError updating user: \n${err}\n`));
         } else {
             axios
-                .post("http://localhost:5000/api/users")
+                .post("http://localhost:5000/api/users", newUser)
                 .then(res => {
                     console.log(`\nNew user created:\n${res}`);
                     setNewUser({ name: "", bio: "" });
@@ -46,9 +47,9 @@ const UserForm = ({ editing, setEditing, userToEdit, toggleEditing }) => {
             <form onSubmit={handleSubmit}>
                 <input name="name" value={newUser.name} onChange={handleChanges} placeholder="Name" />
                 <textarea name="bio" value={newUser.bio} onChange={handleChanges} placeholder="Bio" />
-                <button type="submit">{editing ? "Edit" : "Add"}</button>
-                <button onClick={cancel}>Cancel</button>
+                <button type="submit">{editing ? "Update" : "Add"}</button>
             </form>
+            <button onClick={cancel}>Cancel</button>
         </div>
     );
 };

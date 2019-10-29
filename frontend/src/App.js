@@ -32,10 +32,10 @@ function App() {
     axios
       .delete(`http://localhost:5000/api/users/${id}`)
       .then(res => {
-        console.log(`\nUser successfully deleted:\n${res}\n`)
+        console.log(`\nUser successfully deleted:\n${res}\n`);
       })
       .catch(err => console.log(`\nError deleting user:\n${err}\n`));
-  }
+  };
 
   return (
     <div className="App">
@@ -47,6 +47,8 @@ function App() {
           userToEdit={userToEdit}
           editing={editing}
           toggleEditing={toggleEditing}
+          users={users}
+          setUsers={setUsers}
         />
         <UserList
           users={users}

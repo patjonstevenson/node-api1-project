@@ -24,7 +24,7 @@ const getUserById = async id => {
 server.post("/api/users", (req, res) => {
     const body = req.body
 
-    if (!(body.name || body.bio)) {
+    if (!(body.name && body.bio)) {
         res.status(400).json({
             errorMessage: "Please provide name and bio for the user."
         });
@@ -100,7 +100,7 @@ server.delete("/api/users/:id", (req, res) => {
 server.put("/api/users/:id", (req, res) => {
     const id = req.params.id;
     const body = req.body;
-    if (!(body.name || body.bio)) {
+    if (!(body.name && body.bio)) {
         res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
     } else {
         db
